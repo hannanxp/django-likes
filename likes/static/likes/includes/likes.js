@@ -7,6 +7,7 @@ $('a.liker').live('click', function(event){
     else
         var replace_target = $(replace_selector);
     $.get(el.attr('href'), {}, function(data){
-        replace_target.html(data); 
+        //replace_target.html(data);
+        replace_target.html("+1"); 
     });
 });
