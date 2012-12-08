@@ -25,3 +25,22 @@ def likes(context, obj, template=None):
         'import_js': import_js
     })
     return context
+
+@register.inclusion_tag('likes/inclusion_tags/likesme_extender.html', takes_context=True)
+def likesme(context, obj, template=None):
+    if template is None:
+        template = 'likes/inclusion_tags/likesme.html'
+    request = context['request']
+    import_js = False
+    if not hasattr(request, '_django_likes_js_imported'):
+        setattr(request, '_django_likes_js_imported', 1)
+        import_js = True
+    context.update({
+        'template': template,
+        'content_obj': obj,
+        'likes_enabled': likes_enabled(obj, request),
+        'can_vote': can_vote(obj, request.user, request),
+        'content_type': "-".join((obj._meta.app_label, obj._meta.module_name)),
+        'import_js': import_js
+    })
+    return context

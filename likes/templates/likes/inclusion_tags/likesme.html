@@ -1,0 +1,11 @@
+{% if import_js %}
+<script type="text/javascript" src="{{ STATIC_URL }}likes/includes/likes.js"></script>
+{% endif %}
+
+{% if likes_enabled %}
+    {% if can_vote %}            
+        <a title="I Like" class="liker" href="{% url like content_type content_obj.id 1 %}" >{{ content_obj.vote_total }}</a>
+    {% else %}
+        {{ content_obj.vote_total }}
+    {% endif %}
+{% endif %}
